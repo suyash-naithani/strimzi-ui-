@@ -16,10 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/cache-restore
-        id: cache-node-modules
-        with:
-          node-version: ${{ inputs.node-version }}
 
   #  test-storybook:
   #    needs: setup
@@ -42,13 +38,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/cache-restore
-        id: cache-node-modules
-        with:
-          node-version: 16.19.0
-
-        #👇 Adds Chromatic as a step in the workflow
-      - uses: chromaui/action@v1
+      - name: Build storybook and Deploy to Chromatic 🚀
+        uses: chromaui/action@v1
         id: chromatic
         # Options required for Chromatic's GitHub Action
         with:
